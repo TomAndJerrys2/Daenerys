@@ -1,13 +1,11 @@
-#include <vector>
-
-using std::unique_ptr;
+#include "Daenerys.hpp"
 
 class ExpressAST {
 
 	public:
 		virtual ~ExpressAST() = default;
 };
-
+	
 // Base class for Numeric values and constants
 class NumberExpression : public ExpressAST {
 
@@ -79,13 +77,3 @@ class FunctionAST {
 		FunctionAST(unique_ptr<PrototypeAST> proto, unique_ptr<ExpressAST> def)
 			: prototype(std::move(proto)), definition(std::move(def)) {} 
 };
-
-// a premature test case sample
-
-using std::make_unique;
-
-static auto LHS = make_unique<VariableExpression>("x");
-static auto RHS = make_unique<VariableExpression>("y");
-static auto Result = make_unique<BinaryExpression>('+', std::move(LHS), std::move(RHS));
-
-
