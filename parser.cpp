@@ -77,3 +77,9 @@ class FunctionAST {
 		FunctionAST(unique_ptr<PrototypeAST> proto, unique_ptr<ExpressAST> def)
 			: prototype(std::move(proto)), definition(std::move(def)) {} 
 };
+
+// -- Token Precedence --
+static int CurrentToken;
+static int GetNextToken() { return CurrentToken = GetToken(); }
+
+
