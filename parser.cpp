@@ -82,4 +82,47 @@ class FunctionAST {
 static int CurrentToken;
 static int GetNextToken() { return CurrentToken = GetToken(); }
 
+static std::map<char, uint8_t> BinaryPrecedence;
+
+static int GetTokenPrecedence() {
+	if(!isascii(CurrentToken)) return -1;
+
+	int TokenPrec = BinaryPrecedence[CurrentToken];
+
+	if(TokenPrec <= 0) return -1;
+
+	return TokenPrec;
+}
+
+// Logging errors based on the precedence of the binary operation used
+unique_ptr<ExpressionAST> LogError(const char* str) {	
+	fprintf(stderr, "Error: %s\n", str);
+	return nullptr;
+}
+
+unique_ptr<ExpressionAST> LogErrorP(const char* str) {	
+	fprintf(str);
+	return nullptr
+}
+
+static std::unique_ptr<ExpressionAST> ParseExpression();
+
+static std::unique_ptr<ExpressionAST> ParseNumberExpression() {
+	auto res = std::make_unique<NumberExpressionAST>(number_value);
+	GetNextToken();
+	return std::move(res);
+}
+
+static std::unique_ptr<ExpressionAST> ParseParentExpression() {
+	GetNextToken();
+	auto expr = ParseExpression();
+
+	if(!expr) return nullptr;
+
+	if(CurrentToken != ')') return LogError("Expected end with ')'");
+
+	GetNextToken();
+	return expr;
+}
+
 

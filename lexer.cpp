@@ -14,7 +14,7 @@ enum Token {
 };
 
 static std::string identifier; 		// Filled if token_identifier -> -4
-static double number_val;		// Filled if token_number -> -5
+extern static double number_val;		// Filled if token_number -> -5
 
 static int get_token() const {
 	static int last_char = ' ';	// Whitespace
